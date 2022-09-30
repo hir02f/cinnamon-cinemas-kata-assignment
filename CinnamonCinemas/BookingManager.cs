@@ -30,7 +30,7 @@ namespace CinnamonCinemas
         public void MakeBooking(int numberOfSeats, string customerName)
         {
             var availableSeats = SeatingInfo.Where(s => !s.SeatHasBeenAllocated()).ToList();
-            Console.Write(availableSeats.Count() + "\n");
+            //Console.Write(availableSeats.Count() + "\n");
 
             if (availableSeats.Count() < numberOfSeats)
             {
