@@ -8,11 +8,32 @@ public class BookingTests
     }
 
     [Test]
-    public void Make_A_Booking_Where_Not_Enough_Seats_Left()
+    public void Make_An_Invalid_Booking_Where_Not_Enough_Seats_Left()
     {
         BookingManager bk = new ();
-        var ex = Assert.Throws<ApplicationException>(() => bk.MakeBooking(16, "Customer1"));
+        bk.MakeBooking(3, "Customer1");
+        bk.MakeBooking(3, "Customer2");
+        bk.MakeBooking(3, "Customer3");
+        bk.MakeBooking(3, "Customer4");
+        bk.MakeBooking(3, "Customer5");
+        var ex = Assert.Throws<ApplicationException>(() => bk.MakeBooking(2, "Customer6"));
         Assert.That(ex.Message, Is.EqualTo("Not enough seats left!"));
+    }
+
+    [Test]
+    public void Make_An_Invalid_Booking_Requesting_Zero_Seat()
+    {
+        BookingManager bk = new();
+        var ex = Assert.Throws<ApplicationException>(() => bk.MakeBooking(0, "Customer1"));
+        Assert.That(ex.Message, Is.EqualTo("You have made NO booking....?"));
+    }
+
+    [Test]
+    public void Make_An_Invalid_Booking_Requsting_Four_Seats()
+    {
+        BookingManager bk = new();
+        var ex = Assert.Throws<ApplicationException>(() => bk.MakeBooking(4, "Customer1"));
+        Assert.That(ex.Message, Is.EqualTo("You cannot book more than 3 seats at once!"));
     }
 
     [Test]

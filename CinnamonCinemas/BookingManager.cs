@@ -8,13 +8,15 @@ namespace CinnamonCinemas
 {
     public class BookingManager
     {
+        private const int MAX_ALLOWED = 3;
+
         public List<Booking> SeatingInfo = new()
         {
             new Booking("A1", ""),
             new Booking("A2", ""),
             new Booking("A3", ""),
             new Booking("A4", ""),
-            new Booking("A1", ""),
+            new Booking("A5", ""),
             new Booking("B1", ""),
             new Booking("B2", ""),
             new Booking("B3", ""),
@@ -30,7 +32,16 @@ namespace CinnamonCinemas
         public void MakeBooking(int numberOfSeats, string customerName)
         {
             var availableSeats = SeatingInfo.Where(s => !s.SeatHasBeenAllocated()).ToList();
-            //Console.Write(availableSeats.Count() + "\n");
+
+            if (numberOfSeats == 0)
+            {
+                throw new ApplicationException("You have made NO booking....?");
+            }
+
+            if (numberOfSeats > MAX_ALLOWED)
+            {
+                throw new ApplicationException("You cannot book more than 3 seats at once!");
+            }        
 
             if (availableSeats.Count() < numberOfSeats)
             {
@@ -40,7 +51,6 @@ namespace CinnamonCinemas
             for (int i = 0; i < numberOfSeats; i++)
             {
                 availableSeats.ElementAt(i).SetCustomerName(customerName);
-                Console.WriteLine(availableSeats.ElementAt(i).SeatNumber);
             }
         }
     }
