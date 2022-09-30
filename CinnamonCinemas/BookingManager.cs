@@ -17,13 +17,14 @@ namespace CinnamonCinemas
             new Booking("A5", "")
         };
 
-        public void MakeBooking(int numberOfSeats)
+        public void MakeBooking(int numberOfSeats, string customerName)
         {
-            var availableSeats = SeatingInfo.Where(s => !s.SeatHasBeenAllocated());
-
+            var availableSeats = SeatingInfo.Where(s => !s.SeatHasBeenAllocated()).ToList();
+            Console.Write(availableSeats.Count() + "\n");
             for (int i = 0; i < numberOfSeats; i++)
             {
-                availableSeats.ElementAt(i).SetCustomerName("Customer1");
+                availableSeats.ElementAt(i).SetCustomerName(customerName);
+                Console.WriteLine(availableSeats.ElementAt(i).SeatNumber);
             }
         }
     }

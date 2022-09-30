@@ -24,7 +24,9 @@ namespace CinnamonCinemas
 
         public bool SeatHasBeenAllocated()
         {
-            return false;
+            Console.WriteLine(!String.IsNullOrEmpty(CustomerName));
+            //Console.WriteLine(CustomerName != "");
+            return !String.IsNullOrEmpty(CustomerName);
         }
     }
 }
