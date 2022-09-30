@@ -6,7 +6,15 @@ public class BookingTests
     public void Setup()
     {
     }
-    
+
+    [Test]
+    public void Make_A_Booking_Where_Not_Enough_Seats_Left()
+    {
+        BookingManager bk = new BookingManager();
+        var ex = Assert.Throws<ApplicationException>(() => bk.MakeBooking(16, "Customer1"));
+        Assert.That(ex.Message, Is.EqualTo("Not enough seats left!"));
+    }
+
     [Test]
     public void Make_A_Valid_Booking_Of_One_Seat()
     {
