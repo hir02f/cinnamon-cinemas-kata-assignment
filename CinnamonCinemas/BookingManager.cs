@@ -43,19 +43,16 @@ namespace CinnamonCinemas
 
             if (numberOfSeats == 0)
             {
-                //throw new ApplicationException("You have made NO booking....?");
                 return MakeBookingResult.NO_BOOKING_MADE;
             }
 
             if (numberOfSeats > MAX_ALLOWED)
             {
-                //throw new ApplicationException("You cannot book more than 3 seats at once!");
                 return MakeBookingResult.MAXIMUM_REQUESTED_EXCEEDED;
             }        
 
             if (availableSeats.Count() < numberOfSeats)
             {
-                //throw new ApplicationException("Not enough seats left!");
                 return MakeBookingResult.NOT_ENOUGH_SEATS_LEFT;
             }
 

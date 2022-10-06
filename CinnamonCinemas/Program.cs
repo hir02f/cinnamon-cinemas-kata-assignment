@@ -16,10 +16,18 @@ while (stillWantTickets)
         Console.WriteLine("Now enter customer's name: ");
         string customerName = Console.ReadLine();
 
-        bk.MakeBooking(int.Parse(numberOfTickets), customerName);
+        var bookingResult = bk.MakeBooking(int.Parse(numberOfTickets), customerName);
 
-        Console.WriteLine("Do you still want to book? [Y]es (or enter anything)");
-        stillWantTickets = Console.ReadLine() == "Y";
+        if (bookingResult == BookingManager.MakeBookingResult.OK)
+        {
+            Console.WriteLine("Do you still want to book? [Y]es (or enter anything)");
+            stillWantTickets = Console.ReadLine() == "Y";
+        }
+        else
+        {
+            string errorMessage = bookingResult.ToString();
+            throw new Exception(errorMessage);
+        }
     }
     catch (Exception e)
     {
