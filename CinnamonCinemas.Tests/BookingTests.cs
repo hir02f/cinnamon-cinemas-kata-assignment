@@ -1,3 +1,5 @@
+using static CinnamonCinemas.BookingManager;
+
 namespace CinnamonCinemas.Tests;
 
 public class BookingTests
@@ -16,24 +18,21 @@ public class BookingTests
         bk.MakeBooking(3, "Customer3");
         bk.MakeBooking(3, "Customer4");
         bk.MakeBooking(3, "Customer5");
-        var ex = Assert.Throws<ApplicationException>(() => bk.MakeBooking(2, "Customer6"));
-        Assert.That(ex.Message, Is.EqualTo("Not enough seats left!"));
+        bk.MakeBooking(2, "Customer6").Should().Be(MakeBookingResult.NOT_ENOUGH_SEATS_LEFT);
     }
 
     [Test]
     public void Make_An_Invalid_Booking_Requesting_Zero_Seat()
     {
         BookingManager bk = new();
-        var ex = Assert.Throws<ApplicationException>(() => bk.MakeBooking(0, "Customer1"));
-        Assert.That(ex.Message, Is.EqualTo("You have made NO booking....?"));
+        bk.MakeBooking(0, "Customer1").Should().Be(MakeBookingResult.NO_BOOKING_MADE);
     }
 
     [Test]
     public void Make_An_Invalid_Booking_Requsting_Four_Seats()
     {
         BookingManager bk = new();
-        var ex = Assert.Throws<ApplicationException>(() => bk.MakeBooking(4, "Customer1"));
-        Assert.That(ex.Message, Is.EqualTo("You cannot book more than 3 seats at once!"));
+        bk.MakeBooking(4, "Customer1").Should().Be(MakeBookingResult.MAXIMUM_REQUESTED_EXCEEDED);   
     }
 
     [Test]

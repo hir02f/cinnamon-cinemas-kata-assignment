@@ -29,29 +29,41 @@ namespace CinnamonCinemas
             new Booking("C5", "")        
         };
 
-        public void MakeBooking(int numberOfSeats, string customerName)
+        public enum MakeBookingResult 
+        {
+            OK,
+            NO_BOOKING_MADE,
+            MAXIMUM_REQUESTED_EXCEEDED,
+            NOT_ENOUGH_SEATS_LEFT,
+        }
+
+        public MakeBookingResult MakeBooking(int numberOfSeats, string customerName)
         {
             var availableSeats = SeatingInfo.Where(s => !s.SeatHasBeenAllocated()).ToList();
 
             if (numberOfSeats == 0)
             {
-                throw new ApplicationException("You have made NO booking....?");
+                //throw new ApplicationException("You have made NO booking....?");
+                return MakeBookingResult.NO_BOOKING_MADE;
             }
 
             if (numberOfSeats > MAX_ALLOWED)
             {
-                throw new ApplicationException("You cannot book more than 3 seats at once!");
+                //throw new ApplicationException("You cannot book more than 3 seats at once!");
+                return MakeBookingResult.MAXIMUM_REQUESTED_EXCEEDED;
             }        
 
             if (availableSeats.Count() < numberOfSeats)
             {
-                throw new ApplicationException("Not enough seats left!");
+                //throw new ApplicationException("Not enough seats left!");
+                return MakeBookingResult.NOT_ENOUGH_SEATS_LEFT;
             }
 
             for (int i = 0; i < numberOfSeats; i++)
             {
                 availableSeats.ElementAt(i).SetCustomerName(customerName);
             }
+            return MakeBookingResult.OK;
         }
     }
 }
